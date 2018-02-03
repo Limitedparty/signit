@@ -11,6 +11,7 @@ int init() {
 	}
 	directory = new Directory(&config);
 	directory->load();
+	directory->operation();
 }
 
 int main() {
