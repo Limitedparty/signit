@@ -72,7 +72,7 @@ bool Config::keyset(std::string key, std::string value) {
 	if (key == "workPath") {
 		// Проверяем существование папки
 		if (fs::exists(value)) {
-			workPath_ == value;
+			workPath_ = value;
 			std::cout << "Set workPath=" << value << "\n";
 			return true;
 		} else {
