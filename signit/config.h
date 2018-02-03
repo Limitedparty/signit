@@ -18,4 +18,6 @@ private:
 public:
 	Config();
 	bool setup();
+
+	std::string getWorkPath() { return workPath_; };
 };
