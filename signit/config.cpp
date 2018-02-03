@@ -44,6 +44,8 @@ bool Config::read() {
 			keyset(key, value);
 		}
 	}
+
+	return true;
 }
 // Создание конфига
 bool Config::create() {
@@ -60,6 +62,8 @@ bool Config::create() {
 	// Записываем в файл стандартную чушь
 	writeFile << "# Signit configuration file" << std::endl;
 	writeFile << "workPath=./" << std::endl;
+
+	return true;
 }
 
 // Интерпретация значений конфиг файла
@@ -76,4 +80,5 @@ bool Config::keyset(std::string key, std::string value) {
 			return false;
 		}
 	}
+	return true;
 }
