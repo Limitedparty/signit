@@ -5,6 +5,7 @@
 
 # Ignore Signit config file
 signitconfig
+signit/test/
 
 # User-specific files
 *.suo
