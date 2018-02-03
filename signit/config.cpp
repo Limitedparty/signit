@@ -62,6 +62,7 @@ bool Config::create() {
 	// Записываем в файл стандартную чушь
 	writeFile << "# Signit configuration file" << std::endl;
 	writeFile << "workPath=./" << std::endl;
+	writeFile << "regexSearch=\\.txt|\\.cfg" << std::endl;
 
 	return true;
 }
@@ -80,5 +81,12 @@ bool Config::keyset(std::string key, std::string value) {
 			return false;
 		}
 	}
+
+	// Регулярные выражения
+	if (key == "regexSearch") {
+		std::cout << "Set regexSearch=" << value << "\n";
+		regexSearch_ = value;
+	}
+
 	return true;
 }
