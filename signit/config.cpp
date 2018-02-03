@@ -41,7 +41,7 @@ bool Config::read() {
 				if (line[i] == '=') splited = true;
 				if (!splited) key += line[i];
 			}
-			std::cout << key << " - " << value;
+			keyset(key, value);
 		}
 	}
 }
@@ -60,4 +60,20 @@ bool Config::create() {
 	// Записываем в файл стандартную чушь
 	writeFile << "# Signit configuration file" << std::endl;
 	writeFile << "workPath=./" << std::endl;
+}
+
+// Интерпретация значений конфиг файла
+bool Config::keyset(std::string key, std::string value) {
+	// Путь до рабочей папки
+	if (key == "workPath") {
+		// Проверяем существование папки
+		if (fs::exists(value)) {
+			workPath_ == value;
+			std::cout << "Set workPath=" << value << "\n";
+			return true;
+		} else {
+			std::cout << "Error! workPath=" << value << " doesn't exists\n";
+			return false;
+		}
+	}
 }
