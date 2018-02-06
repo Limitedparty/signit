@@ -45,9 +45,11 @@ void Directory::operation() {
 
 // Добавление подписи
 void Directory::addSign(std::string &filetext) {
-	std::string startSign = "/*\n";
-	std::string textSign = "* Program\n* @author 2018\n";
-	std::string endSign = "*/\n\n";
+	std::string startSign = "/*";
+	std::string textSign = "\n* Program\n* @author 2018\n";
+	std::string endSign = "*/";
+	std::string sign = startSign + textSign + endSign;
+	int endSpaces = 2;
 	int startPos = -1;
 	int endPos = -1;
 	int buffer = 0;
@@ -69,7 +71,7 @@ void Directory::addSign(std::string &filetext) {
 			buffer++;
 		else
 			buffer = 0;
-		if (startSign.length() == buffer) {
+		if (endSign.length() == buffer) {
 			endPos = i;
 			buffer = 0;
 		}
@@ -77,9 +79,17 @@ void Directory::addSign(std::string &filetext) {
 
 	if (startPos != -1 && endPos != -1) {
 		// Заменяем подпись
-		filetext.replace(startPos, endPos + 2, startSign + textSign + endSign);
+		filetext.replace(startPos, endPos + 1, sign);
 	} else {
 		// Добавление подписи к файлу, у которого не было подписи
-		filetext.insert(0, startSign + textSign + endSign);
+		filetext.insert(0, sign);
+		endPos = sign.length() - 1;
+	}
+
+	// Проверка количества пробелов после подписи
+	for (size_t i = 0; i < endSpaces; i++)
+	{
+		if ((endPos + i + 1) < filetext.length() && filetext[endPos + i + 1] != '\n')
+			filetext.insert(endPos + i + 1, 1, '\n');
 	}
 }
