@@ -37,7 +37,7 @@ void Directory::operation() {
 }
 
 // Добавление подписи
-void Directory::addSign(std::string filetext) {
+void Directory::addSign(std::string &filetext) {
 	std::string startSign = "/*\n";
 	std::string textSign = "* Program\n* @author 2018\n";
 	std::string endSign = "*/\n\n";

@@ -15,7 +15,7 @@ class Directory
 private:
 	Config *config_;
 	std::vector<std::string> filesPaths;
-	void addSign(std::string filetext);
+	void addSign(std::string &filetext);
 public:
 	Directory(Config *config);
 	void load();
