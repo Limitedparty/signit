@@ -39,7 +39,7 @@ void Directory::operation() {
 // Добавление подписи
 void Directory::addSign(std::string filetext) {
 	std::string startHead = "/*\n";
-	std::string textHead = "* test\n";
+	std::string textHead = "* test\n* test2\n";
 	std::string endHead = "*/\n";
 	int startPos = -1;
 	int endPos = -1;
@@ -71,5 +71,10 @@ void Directory::addSign(std::string filetext) {
 	std::cout << "SH: " << startPos << "\nEH: " << endPos << std::endl;
 	if (endPos != -1) {
 		std::cout << filetext[startPos] << std::endl;
+		// Убираем старый заголовок
+		filetext.erase(startPos, endPos - 2 - endHead.length());
+		// Пихаем новый
+		filetext.insert(startPos, textHead);
+		std::cout << "\n\n\n" << filetext;
 	}
 }
