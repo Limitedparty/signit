@@ -45,11 +45,11 @@ void Directory::operation() {
 
 // Добавление подписи
 void Directory::addSign(std::string &filetext) {
-	std::string startSign = "/*";
-	std::string textSign = "\n* Program\n* @author 2018\n";
-	std::string endSign = "*/";
+	std::string startSign = config_->getSign().start;
+	std::string textSign = config_->getSign().text;
+	std::string endSign = config_->getSign().end;
 	std::string sign = startSign + textSign + endSign;
-	int endSpaces = 2;
+	int endSpaces = config_->getSign().spaces;
 	int startPos = -1;
 	int endPos = -1;
 	int buffer = 0;
@@ -83,8 +83,8 @@ void Directory::addSign(std::string &filetext) {
 	} else {
 		// Добавление подписи к файлу, у которого не было подписи
 		filetext.insert(0, sign);
-		endPos = sign.length() - 1;
 	}
+	endPos = sign.length() - 1;
 
 	// Проверка количества пробелов после подписи
 	for (size_t i = 0; i < endSpaces; i++)
