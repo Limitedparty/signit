@@ -26,13 +26,20 @@ void Directory::operation() {
 	for each (auto path in filesPaths)
 	{
 		std::fstream fs;
-		fs.open(path, std::fstream::in);
 		std::string filetext = "";
+		// Читаем
+		fs.open(path, std::fstream::in);
 		char c;
 		while (fs.get(c))
 			filetext += c;
-		addSign(filetext);
 		fs.close();
+
+		// Проводим операции
+		addSign(filetext);
+
+		// Сохраняем
+		fs.open(path, std::fstream::out);
+		fs.write(filetext.c_str(), filetext.length());
 	}
 }
 
@@ -70,10 +77,9 @@ void Directory::addSign(std::string &filetext) {
 
 	if (startPos != -1 && endPos != -1) {
 		// Заменяем подпись
-		filetext.replace(startPos, endPos + 1, startSign + textSign + endSign);
+		filetext.replace(startPos, endPos + 2, startSign + textSign + endSign);
 	} else {
 		// Добавление подписи к файлу, у которого не было подписи
 		filetext.insert(0, startSign + textSign + endSign);
 	}
-	std::cout << "\n---\n" << filetext;
 }
