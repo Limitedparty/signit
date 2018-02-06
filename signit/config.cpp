@@ -63,6 +63,11 @@ bool Config::create() {
 	writeFile << "# Signit configuration file" << std::endl;
 	writeFile << "workPath=./" << std::endl;
 	writeFile << "regexSearch=\\.txt|\\.cfg" << std::endl;
+	writeFile << "# Sign settings (start and end without \\n)" << std::endl;
+	writeFile << "signStart=/*" << std::endl;
+	writeFile << "signText=\\n* Program\\n* @author\\n" << std::endl;
+	writeFile << "signEnd=*/" << std::endl;
+	writeFile << "signEndSpaces=2" << std::endl;
 
 	return true;
 }
@@ -86,6 +91,36 @@ bool Config::keyset(std::string key, std::string value) {
 	if (key == "regexSearch") {
 		std::cout << "Set regexSearch=" << value << "\n";
 		regexSearch_ = value;
+	}
+
+	// Начало подписи
+	if (key == "signStart") {
+		sign_.start = value;
+	}
+
+	// Текст подписи
+	if (key == "signText") {
+		// Замена \n на нормальный конец строки
+		char last = ' ';
+		for (size_t i = 0; i < value.length(); i++)
+		{
+			if (last == '\\' && value[i] == 'n') {
+				value.replace(i-1, 2, "\n");
+			}
+			last = value[i];
+		}
+		sign_.text = value;
+		std::cout << "Set signText=" << value << "\n";
+	}
+
+	// Конец подписи
+	if (key == "signEnd") {
+		sign_.end = value;
+	}
+
+	// Количество пробелов после подписи
+	if (key == "signEndSpaces") {
+		sign_.spaces = atoi(value.c_str());
 	}
 
 	return true;
