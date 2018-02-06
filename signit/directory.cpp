@@ -38,43 +38,42 @@ void Directory::operation() {
 
 // Добавление подписи
 void Directory::addSign(std::string filetext) {
-	std::string startHead = "/*\n";
-	std::string textHead = "* test\n* test2\n";
-	std::string endHead = "*/\n";
+	std::string startSign = "/*\n";
+	std::string textSign = "* Program\n* @author 2018\n";
+	std::string endSign = "*/\n\n";
 	int startPos = -1;
 	int endPos = -1;
 	int buffer = 0;
 
 	// Поиск совпадения с началом
-	for (size_t i = 0; i < startHead.length(); i++)
+	for (size_t i = 0; i < startSign.length(); i++)
 	{
-		if (filetext[i] == startHead[i])
+		if (filetext[i] == startSign[i])
 			buffer++;
 	}
-	if (buffer == startHead.length())
-		startPos = startHead.length();
+	if (buffer == startSign.length())
+		startPos = 0;
 
 	buffer = 0;
 	// Поиск совпадения с концом
 	for (size_t i = 0; i < filetext.length(); i++)
 	{
-		if (filetext[i] == endHead[buffer])
+		if (filetext[i] == endSign[buffer])
 			buffer++;
 		else
 			buffer = 0;
-		if (startHead.length() == buffer) {
+		if (startSign.length() == buffer) {
 			endPos = i;
 			buffer = 0;
 		}
 	}
 
-	std::cout << "SH: " << startPos << "\nEH: " << endPos << std::endl;
-	if (endPos != -1) {
-		std::cout << filetext[startPos] << std::endl;
-		// Убираем старый заголовок
-		filetext.erase(startPos, endPos - 2 - endHead.length());
-		// Пихаем новый
-		filetext.insert(startPos, textHead);
-		std::cout << "\n\n\n" << filetext;
+	if (startPos != -1 && endPos != -1) {
+		// Заменяем подпись
+		filetext.replace(startPos, endPos + 1, startSign + textSign + endSign);
+	} else {
+		// Добавление подписи к файлу, у которого не было подписи
+		filetext.insert(0, startSign + textSign + endSign);
 	}
+	std::cout << "\n---\n" << filetext;
 }
