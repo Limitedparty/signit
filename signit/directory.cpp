@@ -8,7 +8,7 @@ Directory::Directory(Config *config) {
 // Загрузка файлов директории (и поиск подходящих)
 void Directory::load() {
 	std::cout << "\nSearching files...\n";
-	std::regex fileRegex("\.txt|\.cfg");
+	std::regex fileRegex(config_->getRegexSearch());
 	// Перебор файлов в папке
 	for (auto &p : fs::recursive_directory_iterator(config_->getWorkPath())) {
 		std::string path = p.path().string();
